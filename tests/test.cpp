@@ -1,8 +1,8 @@
 #include "../src/graph.hpp"
 #include "../src/dfs.hpp"
 #include "../src/bfs.hpp"
+#include "../src/dijkstra.hpp"
 
-#include <iostream>
 #include <fstream>
 #include <assert.h>
 
@@ -85,6 +85,22 @@ void bfs_test() {
     cout << "success." << endl;
 }
 
+void dijkstra_test() {
+    ifstream file("/home/ihoold/git/programming/algorithms/tests/example_graph2");
+    int n, m;
+    file >> n >> m;
+    Graph<DijkstraNode, DijkstraEdge> g1(n);
+    int fst, snd;
+    long long rd;
+    for (auto i = 0; i < m; i++) {
+        file >> fst >> snd >> rd;
+        g1.addDoubleEdge(fst, snd, DijkstraEdge(rd));
+    }
+    g1.dijkstra(0);
+
+    cout << "success." << endl;
+}
+
 int main() {
     cout << "Constructor tests: ";
     constructor_tests();
@@ -103,4 +119,7 @@ int main() {
 
     cout << "Bfs test: ";
     bfs_test();
+
+    cout << "Dijkstra test: ";
+    dijkstra_test();
 }

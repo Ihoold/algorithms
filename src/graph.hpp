@@ -6,7 +6,7 @@
 #include <iostream>
 
 
-class Node{};
+class Node {};
 class Edge {};
 
 template <typename Node, typename Edge>

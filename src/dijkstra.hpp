@@ -8,11 +8,11 @@
 #include "graph.hpp"
 #include <set>
 
-const int LONG_INF = 10e16;
+const long long LONG_INF = 10e16;
 
 class DijkstraNode : public Node {
 public:
-    long long dist = INF;
+    long long dist = LONG_INF;
 };
 
 class DijkstraEdge : public Edge {
@@ -25,20 +25,23 @@ public:
 template <typename Node, typename Edge>
 void Graph<Node, Edge>::dijkstra(int source) {
     this->nodes[source].dist = 0;
-    auto comp = [](pair<long long, int>& a, pair<long long, int>& b) {
+    auto comp = [](const std::pair<long long, int>& a,
+                   const std::pair<long long, int>& b) {
         return (a.first == b.first) ? a.second < b.second : a.first < b.first;
     };
-    set<pair<long long, int>> queue(comp);
+    std::set<std::pair<long long, int>, decltype(comp)> queue(comp);
     for (auto node : nodes)
-        queue.insert(make_pair(node.dist, node.index));
+        queue.insert(std::make_pair(node.dist, node.index));
 
     while(!queue.empty()) {
         auto current = this->nodes[queue.begin()->second];
+        queue.erase(queue.begin());
         for(auto edge : current.childs) {
-            auto updated_weight = current.dist + edge.dest.weight;
-            if (updated_weight < edge.dest.weight) {
-                queue.erase(make_pair(edge.dest.weight, edge.dest.index));
-                queue.insert(make_pair(updated_weight, edge.dest.index));
+            auto updated_dist = current.dist + edge.weight;
+            if (updated_dist < edge.dest.dist) {
+                queue.erase(std::make_pair(edge.dest.dist, edge.dest.index));
+                edge.dest.dist = updated_dist;
+                queue.insert(std::make_pair(edge.dest.dist, edge.dest.index));
             }
         }
     }
