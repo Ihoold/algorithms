@@ -77,6 +77,7 @@ public:
 
     void dfs();
     void bfs(int source = 0);
+    void dijkstra(int source = 0);
 };
 
 #endif //ALGORITHMS_DFS_HPP
