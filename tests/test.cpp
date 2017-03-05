@@ -2,6 +2,7 @@
 #include "../src/dfs.hpp"
 #include "../src/bfs.hpp"
 #include "../src/dijkstra.hpp"
+#include "../src/floyd.hpp"
 
 #include <fstream>
 #include <assert.h>
@@ -96,8 +97,41 @@ void dijkstra_test() {
         file >> fst >> snd >> rd;
         g1.addDoubleEdge(fst, snd, DijkstraEdge(rd));
     }
-    g1.dijkstra(0);
+    g1.dijkstra();
 
+    cout << "success." << endl;
+}
+
+void floyd_positive_test() {
+    ifstream file("/home/ihoold/git/programming/algorithms/tests/example_graph2");
+    int n, m;
+    file >> n >> m;
+    Graph<FloydNode, FloydEdge> g1(n);
+    int fst, snd;
+    long long rd;
+    for (auto i = 0; i < m; i++) {
+        file >> fst >> snd >> rd;
+        g1.addDoubleEdge(fst, snd, FloydEdge(rd));
+    }
+
+    assert (!g1.floyd());
+    cout << "success." << endl;
+}
+
+
+void floyd_negative_test() {
+    ifstream file("/home/ihoold/git/programming/algorithms/tests/example_graph3");
+    int n, m;
+    file >> n >> m;
+    Graph<FloydNode, FloydEdge> g1(n);
+    int fst, snd;
+    long long rd;
+    for (auto i = 0; i < m; i++) {
+        file >> fst >> snd >> rd;
+        g1.addDoubleEdge(fst, snd, FloydEdge(rd));
+    }
+
+    assert (g1.floyd());
     cout << "success." << endl;
 }
 
@@ -122,4 +156,10 @@ int main() {
 
     cout << "Dijkstra test: ";
     dijkstra_test();
+
+    cout << "Floyd test 1: ";
+    floyd_positive_test();
+
+    cout << "Floyd test 2: ";
+    floyd_negative_test();
 }

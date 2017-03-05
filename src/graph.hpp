@@ -74,10 +74,11 @@ public:
         }
     }
 
-
     void dfs();
     void bfs(int source = 0);
     void dijkstra(int source = 0);
+    // Returns true if there is a cycle witch sums up to negative number.
+    bool floyd(int source = 0);
 };
 
 #endif //ALGORITHMS_DFS_HPP
