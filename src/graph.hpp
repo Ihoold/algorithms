@@ -58,11 +58,12 @@ public:
     // Utilities
     V& addNode() {
         nodes.emplace_back(nodes.size());
+        return nodes.back();
     }
 
     V& addNode(Node&& info) {
-        nodes.emplace_back(nodes.size());
         nodes.emplace_back(nodes.size(), std::move(info));
+        return nodes.back();
     }
 
     void addEdge(int source, int dest) {

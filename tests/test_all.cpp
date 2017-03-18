@@ -1,9 +1,4 @@
-#include "../src/graph.hpp"
-#include "../src/dfs.hpp"
-#include "../src/bfs.hpp"
-#include "../src/dijkstra.hpp"
-#include "../src/floyd.hpp"
-#include "../src/dinitz.hpp"
+#include "../src/graph_all.hpp"
 
 #include <fstream>
 #include <assert.h>
