@@ -8,8 +8,6 @@
 #include "graph.hpp"
 #include <set>
 
-const long long LONG_INF = 10e16;
-
 class DijkstraNode : public Node {
 public:
     long long dist = LONG_INF;
@@ -37,11 +35,13 @@ void Graph<Node, Edge>::dijkstra(int source) {
         auto current = this->nodes[queue.begin()->second];
         queue.erase(queue.begin());
         for(auto edge : current.childs) {
-            auto updated_dist = current.dist + edge.weight;
-            if (updated_dist < edge.dest.dist) {
-                queue.erase(std::make_pair(edge.dest.dist, edge.dest.index));
-                edge.dest.dist = updated_dist;
-                queue.insert(std::make_pair(edge.dest.dist, edge.dest.index));
+            if(!edge.disabled) {
+                auto updated_dist = current.dist + edge.weight;
+                if (updated_dist < edge.dest.dist) {
+                    queue.erase(std::make_pair(edge.dest.dist, edge.dest.index));
+                    edge.dest.dist = updated_dist;
+                    queue.insert(std::make_pair(edge.dest.dist, edge.dest.index));
+                }
             }
         }
     }

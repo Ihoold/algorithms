@@ -13,11 +13,15 @@ public:
     int out = 0;
 };
 
+class DfsEdge : public Edge {
+
+};
+
 template <typename Node, typename Edge>
 int Graph<Node, Edge>::V::dfs(int time) {
     this->in = time++;
     for (auto edge : childs) {
-        if (edge.dest.in == 0)
+        if (!edge.disabled && edge.dest.in == 0)
             time = edge.dest.dfs(time);
     }
     this->out = time++;
@@ -25,7 +29,11 @@ int Graph<Node, Edge>::V::dfs(int time) {
 };
 
 template <typename Node, typename Edge>
-void Graph<Node, Edge>::dfs() {
+void Graph<Node, Edge>::dfs(int source) {
+    if(source != -1) {
+        nodes[source].dfs(1);
+        return;
+    }
     auto time = 1;
     for (auto& node : nodes) {
         if (node.in == 0)

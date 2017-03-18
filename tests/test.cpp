@@ -3,6 +3,7 @@
 #include "../src/bfs.hpp"
 #include "../src/dijkstra.hpp"
 #include "../src/floyd.hpp"
+#include "../src/dinitz.hpp"
 
 #include <fstream>
 #include <assert.h>
@@ -135,6 +136,22 @@ void floyd_negative_test() {
     cout << "success." << endl;
 }
 
+void dinitz_test() {
+    ifstream file("/home/ihoold/git/programming/algorithms/tests/example_graph2");
+    int n, m;
+    file >> n >> m;
+    Graph<DinitzNode, DinitzEdge> g1(n);
+    int fst, snd;
+    long long rd;
+    for (auto i = 0; i < m; i++) {
+        file >> fst >> snd >> rd;
+        g1.addDoubleEdge(fst, snd, DinitzEdge(rd));
+    }
+
+    assert(g1.dinitz(4, 3) == 7);
+    cout << "success." << endl;
+}
+
 int main() {
     cout << "Constructor tests: ";
     constructor_tests();
@@ -162,4 +179,7 @@ int main() {
 
     cout << "Floyd test 2: ";
     floyd_negative_test();
+
+    cout << "Dinitz test: ";
+    dinitz_test();
 }

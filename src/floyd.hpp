@@ -29,12 +29,14 @@ bool Graph<Node, Edge>::floyd(int source) {
 
         for (auto node : this->nodes) {
             for(auto edge : node.childs) {
-                auto updated_dist = node.dist + edge.weight;
-                if (updated_dist < edge.dest.dist) {
-                    changed = true;
-                    queue.erase(std::make_pair(edge.dest.dist, edge.dest.index));
-                    edge.dest.dist = updated_dist;
-                    queue.insert(std::make_pair(edge.dest.dist, edge.dest.index));
+                if(!edge.disabled) {
+                    auto updated_dist = node.dist + edge.weight;
+                    if (updated_dist < edge.dest.dist) {
+                        changed = true;
+                        queue.erase(std::make_pair(edge.dest.dist, edge.dest.index));
+                        edge.dest.dist = updated_dist;
+                        queue.insert(std::make_pair(edge.dest.dist, edge.dest.index));
+                    }
                 }
             }
         }

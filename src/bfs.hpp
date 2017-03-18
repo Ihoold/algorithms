@@ -8,18 +8,21 @@
 #include "graph.hpp"
 #include <deque>
 
-const int INF = 10e8;
-
 class BfsNode : public Node {
 public:
     int dist = INF;
     bool visited = false;
 };
 
+class BfsEdge : public Edge {
+
+};
+
+
 template <typename Node, typename Edge>
 void Graph<Node, Edge>::V::bfs(std::deque<int>& toVisit) {
     for (auto edge : this->childs) {
-        if (!edge.dest.visited) {
+        if (!edge.disabled && !edge.dest.visited) {
             edge.dest.visited = true;
             edge.dest.dist = this->dist + 1;
             toVisit.push_back(edge.dest.index);
